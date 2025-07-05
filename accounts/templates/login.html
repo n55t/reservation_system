@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ログイン</title>
+</head>
+<body>
+  <h2>🔐 ログイン画面（カスタム）</h2>
+  <form method="post">
+    {% csrf_token %}
+    <p>
+      <label>ユーザー名</label><br>
+      {{ form.username }}
+    </p>
+    <p>
+      <label>パスワード</label><br>
+      {{ form.password }}
+    </p>
+    <p>
+      <button type="submit">ログインする</button>
+    </p>
+  </form>
+  {% if form.errors %}
+    <p style="color: red;">ユーザー名またはパスワードが正しくありません。</p>
+  {% endif %}
+</body>
+</html>
