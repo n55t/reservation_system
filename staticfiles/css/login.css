@@ -1,0 +1,45 @@
+body {
+    background-color: #f0f8ff; /* 淡い水色 */
+}
+
+.login-container {
+    margin-top: 100px;
+}
+
+.login-card {
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: #ffffff;
+}
+
+.login-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #4a5568;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(173, 216, 230, 0.5); /* 淡い水色のフォーカス色 */
+    border-color: #add8e6;
+}
+
+.btn-primary {
+    background-color: #add8e6;
+    border-color: #add8e6;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #87ceeb;
+    border-color: #87ceeb;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.login-icon {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 4rem;
+    color: #add8e6;
+}
