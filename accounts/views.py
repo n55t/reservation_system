@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView
 
 
 class CustomLoginView(LoginView):
-    template_name = 'login.html'
+    template_name = 'accounts/login.html'
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
