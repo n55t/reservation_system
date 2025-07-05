@@ -1,0 +1,24 @@
+body {
+    background: linear-gradient(to bottom right, #0d6efd, #0dcaf0);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+}
+
+.login-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+}
+
+.form-control:focus {
+    border-color: #0dcaf0;
+    box-shadow: 0 0 0 0.2rem rgba(13, 202, 240, 0.25);
+}
