@@ -1,5 +1,9 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
+from django.urls import reverse_lazy
+from django.views import generic
+
+from .forms import CustomUserCreationForm
 
 
 class CustomLoginView(LoginView):
@@ -10,3 +14,9 @@ class CustomLoginView(LoginView):
         form.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': 'ユーザー名'})
         form.fields['password'].widget.attrs.update({'class': 'form-control', 'placeholder': 'パスワード'})
         return form
+
+
+class SignUpView(generic.CreateView):
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'accounts/signup.html'

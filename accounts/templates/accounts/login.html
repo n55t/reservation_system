@@ -39,6 +39,9 @@
           {% if form.errors %}
             <p class="text-danger mt-3 text-center">ユーザー名またはパスワードが正しくありません。</p>
           {% endif %}
+          <div class="text-center mt-3">
+            <a href="{% url 'signup' %}">アカウントをお持ちでないですか？ 新規登録</a>
+          </div>
         </div>
       </div>
     </div>
