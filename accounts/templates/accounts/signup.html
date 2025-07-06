@@ -24,9 +24,7 @@
               <div class="mb-3">
                 <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
                 {{ field }}
-                {% if field.name == 'password2' %}
-                  <div class="form-text">パスワードの確認のため、もう一度同じパスワードを入力してください。</div>
-                {% elif field.help_text %}
+                {% if field.help_text %}
                   <div class="form-text">{{ field.help_text|safe }}</div>
                 {% endif %}
                 {% for error in field.errors %}

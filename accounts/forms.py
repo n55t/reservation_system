@@ -13,6 +13,7 @@ class CustomUserCreationForm(UserCreationForm):
             'birth_date': '生年月日',
             'phone': '電話番号',
             'postal_code': '郵便番号',
+            'password2': 'パスワード（確認用）',
         }
 
     def __init__(self, *args, **kwargs):
