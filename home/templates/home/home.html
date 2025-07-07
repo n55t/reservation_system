@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>sample.inc | 予約管理</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<header class="bg-primary text-white py-3">
+    <div class="container d-flex align-items-center justify-content-between">
+        <h1 class="h3 mb-0"><span style="font-size:1.5rem;">🐋</span> sample.inc</h1>
+        <div>
+            <a href="{% url 'login' %}" class="btn btn-light me-2">ログイン</a>
+            <a href="{% url 'signup' %}" class="btn btn-outline-light">サインアップ</a>
+        </div>
+    </div>
+</header>
+
+<main class="container my-5">
+    <section class="mb-5">
+        <h2 class="h4">sample.incについて</h2>
+        <p>
+            sample.inc は、最新の技術を活用したオンライン予約プラットフォームを提供する企業です。<br>
+            医療、教育、美容など多様な業界に対応し、顧客とサービス提供者をスムーズに繋ぐことを目的としています。
+        </p>
+    </section>
+
+    <section>
+        <a href="#" class="btn btn-secondary">お問い合わせはこちら</a>
+    </section>
+</main>
+
+<footer class="bg-light text-center py-3">
+    <small>&copy; 2025 sample.inc</small>
+</footer>
+
+</body>
+</html>
