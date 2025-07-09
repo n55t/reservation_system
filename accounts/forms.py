@@ -4,6 +4,7 @@ from .models import CustomUser
 import re
 from datetime import date
 
+
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
@@ -49,3 +50,15 @@ class CustomUserCreationForm(UserCreationForm):
             # 数字以外の文字をすべて削除
             return re.sub(r'\D', '', phone)
         return phone
+
+    def clean(self):
+        cleaned_data = super().clean()
+        email = cleaned_data.get('email')
+        phone = cleaned_data.get('phone')
+
+        if not email and not phone:
+            raise forms.ValidationError(
+                "メールアドレスまたは電話番号のいずれかを入力してください。",
+                code='required_either'
+            )
+        return cleaned_data
