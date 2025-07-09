@@ -1,14 +1,28 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.utils.translation import gettext_lazy as _
 
 
 class CustomUser(AbstractUser):
+    # usernameのユニーク制約を外すために再定義
+    username = models.CharField(
+        _("username"),
+        max_length=150,
+        unique=False,  # ユニーク制約を解除
+        help_text=_("Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."),
+        error_messages={
+            "unique": _("A user with that username already exists."),
+        },
+    )
+    # emailをユニークにし、必須項目とする
+    email = models.EmailField(_("email address"), unique=True)
+
     # 氏名（かな）
     last_name_kana = models.CharField("姓（かな）", max_length=150, blank=True)
     first_name_kana = models.CharField("名（かな）", max_length=150, blank=True)
 
     # 電話番号
-    phone = models.CharField("電話番号", max_length=20, blank=True)
+    phone = models.CharField("電話番号", max_length=20, unique=True, null=True, blank=True)
 
     # 生年月日
     birth_date = models.DateField("生年月日", null=True, blank=True)
@@ -20,5 +34,11 @@ class CustomUser(AbstractUser):
     street_address = models.CharField("番地など", max_length=255, blank=True)
     building_name = models.CharField("建物名・部屋番号", max_length=255, blank=True)
 
+    # ログインIDをemailに変更
+    USERNAME_FIELD = 'email'
+    # ユーザー作成時に必須とするフィールド（USERNAME_FIELDは含めない）
+    REQUIRED_FIELDS = ['username']
+
     def __str__(self):
         return self.username
+

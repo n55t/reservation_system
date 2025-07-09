@@ -30,6 +30,13 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+AUTHENTICATION_BACKENDS = (
+    'accounts.backends.EmailOrPhoneBackend',
+    'django.contrib.auth.backends.ModelBackend', # 管理サイト用のフォールバック
+)
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

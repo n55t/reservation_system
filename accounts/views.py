@@ -1,22 +1,27 @@
+from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views import generic
+from django.views.generic import TemplateView
 
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, EmailOrPhoneLoginForm
 
 
 class CustomLoginView(LoginView):
+    form_class = EmailOrPhoneLoginForm
     template_name = 'accounts/login.html'
-
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class)
-        form.fields['username'].widget.attrs.update({'class': 'form-control', 'placeholder': 'ユーザー名'})
-        form.fields['password'].widget.attrs.update({'class': 'form-control', 'placeholder': 'パスワード'})
-        return form
 
 
 class SignUpView(generic.CreateView):
     form_class = CustomUserCreationForm
-    success_url = reverse_lazy('login')
+    success_url = reverse_lazy('signup_success')
     template_name = 'accounts/signup.html'
+
+    def form_valid(self, form):
+        messages.success(self.request, "アカウントを作成しました。")
+        return super().form_valid(form)
+
+
+class SignUpSuccessView(TemplateView):
+    template_name = 'accounts/signup_success.html'

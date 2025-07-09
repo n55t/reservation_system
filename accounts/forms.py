@@ -1,16 +1,25 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import CustomUser
 import re
 from datetime import date
+
+
+class EmailOrPhoneLoginForm(AuthenticationForm):
+    """ログインフォームをメールアドレスまたは電話番号用に変更"""
+    username = forms.CharField(
+        label="メールアドレスまたは電話番号",
+        widget=forms.TextInput(attrs={'autofocus': True, 'class': 'form-control'})
+    )
 
 
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
         fields = (
+            'username', 'email', # emailを先頭の方へ
             'last_name', 'first_name', 'last_name_kana', 'first_name_kana',
-            'username', 'email', 'birth_date', 'phone',
+            'birth_date', 'phone',
             'postal_code', 'prefecture', 'city', 'street_address', 'building_name'
         )
 
