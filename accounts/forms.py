@@ -5,12 +5,41 @@ import re
 from datetime import date
 
 
-class EmailOrPhoneLoginForm(AuthenticationForm):
-    """ログインフォームをメールアドレスまたは電話番号用に変更"""
-    username = forms.CharField(
-        label="メールアドレスまたは電話番号",
-        widget=forms.TextInput(attrs={'autofocus': True, 'class': 'form-control'})
+class LoginForm(AuthenticationForm):
+    """ログインフォームを電話番号またはメールアドレス用に変更"""
+    email = forms.EmailField(
+        label="メールアドレス",
+        required=False,
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'メールアドレスを入力してください'})
     )
+    phone = forms.CharField(
+        label="電話番号",
+        required=False,
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '電話番号を入力してください'})
+    )
+
+    def clean(self):
+        email = self.cleaned_data.get('email')
+        phone = self.cleaned_data.get('phone')
+
+        if not email and not phone:
+            raise forms.ValidationError(
+                "メールアドレスまたは電話番号のいずれかを入力してください。",
+                code='no_identifier'
+            )
+        elif email and phone:
+            raise forms.ValidationError(
+                "メールアドレスと電話番号は同時に指定できません。",
+                code='both_identifiers'
+            )
+
+        # 認証バックエンドに渡すための 'username' フィールドを設定
+        if email:
+            self.cleaned_data['username'] = email
+        elif phone:
+            self.cleaned_data['username'] = phone
+
+        return self.cleaned_data
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -68,6 +97,6 @@ class CustomUserCreationForm(UserCreationForm):
         if not email and not phone:
             raise forms.ValidationError(
                 "メールアドレスまたは電話番号のいずれかを入力してください。",
-                code='required_either'
+                code='no_identifier'
             )
         return cleaned_data

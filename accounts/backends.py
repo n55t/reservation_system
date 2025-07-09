@@ -5,12 +5,22 @@ from django.db.models import Q
 class EmailOrPhoneBackend(ModelBackend):
     def authenticate(self, request, username=None, password=None, **kwargs):
         UserModel = get_user_model()
-        try:
-            # emailか電話番号でユーザーを検索。入力が空の場合は除外する。
-            user = UserModel.objects.get(Q(email=username) | Q(phone=username))
-        except UserModel.DoesNotExist:
-            return None
+        email = kwargs.get('email')
+        phone = kwargs.get('phone')
 
-        if user.check_password(password):
+        user = None
+        if email:
+            try:
+                user = UserModel.objects.get(email=email)
+            except UserModel.DoesNotExist:
+                pass
+        
+        if not user and phone:
+            try:
+                user = UserModel.objects.get(phone=phone)
+            except UserModel.DoesNotExist:
+                pass
+
+        if user and user.check_password(password):
             return user
         return None
