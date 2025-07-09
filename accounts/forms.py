@@ -46,7 +46,7 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
         fields = (
-            'username', 'email', # emailを先頭の方へ
+            'email', # usernameを削除
             'last_name', 'first_name', 'last_name_kana', 'first_name_kana',
             'birth_date', 'phone',
             'postal_code', 'prefecture', 'city', 'street_address', 'building_name'
@@ -59,7 +59,6 @@ class CustomUserCreationForm(UserCreationForm):
         self.fields['first_name'].label = "名"
         self.fields['last_name_kana'].label = "姓（かな）"
         self.fields['first_name_kana'].label = "名（かな）"
-        self.fields['username'].label = "ユーザー名"
         self.fields['email'].label = "メールアドレス"
         self.fields['birth_date'].label = "生年月日"
         self.fields['phone'].label = "電話番号"

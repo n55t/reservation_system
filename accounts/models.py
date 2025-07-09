@@ -1,14 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
+import uuid # uuidをインポート
 
 
 class CustomUser(AbstractUser):
-    # usernameのユニーク制約を外すために再定義
+    # usernameのユニーク制約を外し、必須ではなくし、デフォルト値を設定
     username = models.CharField(
         _("username"),
         max_length=150,
         unique=False,  # ユニーク制約を解除
+        blank=True, # 必須ではない
+        null=True, # DBでもNULLを許容
+        default=uuid.uuid4, # デフォルト値をUUIDに設定
         help_text=_("Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."),
         error_messages={
             "unique": _("A user with that username already exists."),
@@ -37,7 +41,7 @@ class CustomUser(AbstractUser):
     # ログインIDをemailに変更
     USERNAME_FIELD = 'email'
     # ユーザー作成時に必須とするフィールド（USERNAME_FIELDは含めない）
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = [] # usernameを必須から外す
 
     def __str__(self):
         return self.username

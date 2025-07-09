@@ -76,7 +76,7 @@
 
             {# その他のフィールドをループ処理 #}
             {% for field in form %}
-              {% if field.name not in "last_name,first_name,last_name_kana,first_name_kana" %}
+              {% if field.name not in "last_name,first_name,last_name_kana,first_name_kana,username" %}
                 <div class="mb-3">
                   {{ field.label_tag }}
                   
@@ -95,7 +95,9 @@
 
                   {% if field.errors %}
                     <div class="invalid-feedback d-block">
-                      {{ field.errors|striptags }}
+                      {% for error in field.errors %}
+                        {{ error }}
+                      {% endfor %}
                     </div>
                   {% endif %}
 
