@@ -108,6 +108,31 @@
               {% endif %}
             {% endfor %}
 
+            <!-- パスワード -->
+            {% for field in form.password_fields %}
+              <div class="mb-3">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                  <div class="invalid-feedback d-block">
+                    {% for error in field.errors %}
+                      {{ error }}
+                    {% endfor %}
+                  </div>
+                {% endif %}
+              </div>
+            {% endfor %}
+
+            <div class="form-text">
+              <ul class="list-unstyled mt-2">
+                <li id="password-length">・8文字以上</li>
+                <li id="password-lowercase">・小文字を1文字以上</li>
+                <li id="password-uppercase">・大文字を1文字以上</li>
+                <li id="password-digit">・数字を1文字以上</li>
+                <li id="password-special">・特殊文字（!@#$%^&*()_+{}[]:;<>,.?~\-）を1文字以上</li>
+              </ul>
+            </div>
+
             <div class="d-grid mt-4">
               <button type="submit" class="btn btn-primary btn-block">登録する</button>
             </div>
@@ -145,6 +170,70 @@
           alert('通信に失敗しました。時間をおいて再度お試しください。');
         });
     });
+
+    // パスワードリアルタイムバリデーション
+    console.log("Script loaded.");
+    const passwordInput = document.getElementById('id_password1');
+    const passwordConfirmInput = document.getElementById('id_password2');
+
+    console.log("passwordInput element:", passwordInput);
+    console.log("passwordConfirmInput element:", passwordConfirmInput);
+
+    const lengthCheck = document.getElementById('password-length');
+    const lowercaseCheck = document.getElementById('password-lowercase');
+    const uppercaseCheck = document.getElementById('password-uppercase');
+    const digitCheck = document.getElementById('password-digit');
+    const specialCheck = document.getElementById('password-special');
+
+    console.log("Check elements:", { lengthCheck, lowercaseCheck, uppercaseCheck, digitCheck, specialCheck });
+
+    function updateCheck(element, isValid) {
+      console.log("updateCheck called for", element.id, ", isValid:", isValid);
+      if (isValid) {
+        element.innerHTML = '✅' + element.innerHTML.substring(1);
+        element.style.color = 'green';
+      } else {
+        element.innerHTML = '・' + element.innerHTML.substring(1);
+        element.style.color = 'inherit';
+      }
+    }
+
+    function validatePassword() {
+      console.log("validatePassword called.");
+      const password = passwordInput.value;
+      console.log("Password value:", password);
+
+      // 長さチェック (8文字以上)
+      updateCheck(lengthCheck, password.length >= 8);
+
+      // 小文字チェック
+      updateCheck(lowercaseCheck, /[a-z]/.test(password));
+
+      // 大文字チェック
+      updateCheck(uppercaseCheck, /[A-Z]/.test(password));
+
+      // 数字チェック
+      updateCheck(digitCheck, /[0-9]/.test(password));
+
+      // 特殊文字チェック
+      updateCheck(specialCheck, /[!@#$%^&*()_+{}\[\]:;<>,.?~\-]/.test(password));
+    }
+
+    if (passwordInput) {
+      passwordInput.addEventListener('input', validatePassword);
+      console.log("Event listener attached to passwordInput.");
+    }
+
+    // パスワード確認フィールドのバリデーション（リアルタイムでは行わないが、念のため）
+    if (passwordConfirmInput) {
+      passwordConfirmInput.addEventListener('input', () => {
+        // ここでパスワード一致のチェックなどを追加できます
+        console.log("Password confirm input changed.");
+      });
+    }
+
+    // 初期ロード時にもバリデーションを実行
+    validatePassword();
   </script>
 </body>
 </html>
