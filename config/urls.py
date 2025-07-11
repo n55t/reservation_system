@@ -9,4 +9,6 @@ urlpatterns = [
     path('login/', CustomLoginView.as_view(), name='login'),
     path('signup/', SignUpView.as_view(), name='signup'),
     path('signup/success/', SignUpSuccessView.as_view(), name='signup_success'),
+    path('accounts/', include('accounts.urls')),
+    path('schedule/', include('schedule.urls')),
 ]

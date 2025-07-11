@@ -20,7 +20,8 @@ class CustomLoginView(LoginView):
         password = form.cleaned_data.get('password')
 
         # authenticate関数にemailとphoneを渡す
-        user = authenticate(self.request, email=email, phone=phone, password=password)
+        user = authenticate(self.request, email=email,
+                            phone=phone, password=password)
 
         if user is not None:
             # 認証成功
@@ -29,7 +30,6 @@ class CustomLoginView(LoginView):
             # 認証失敗
             form.add_error(None, "メールアドレス/電話番号またはパスワードが正しくありません。")
             return self.form_invalid(form)
-
 
 
 class SignUpView(generic.CreateView):

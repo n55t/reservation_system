@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    table {
+        border-collapse: collapse;
+        background-color: #fff;
+    }
+    th, td {
+        border: 1px solid #add8e6;
+        padding: 8px;
+        text-align: center;
+    }
+    th {
+        background-color: #e0f2f7;
+        color: #005a9e;
+    }
+    .time-header {
+        width: 80px;
+        background-color: #e0f2f7;
+        color: #005a9e;
+    }
+    .available {
+        color: green;
+    }
+    .maybe {
+        color: orange;
+    }
+    .unavailable {
+        color: blue;
+    }
+</style>
+
+<h1>Calendar</h1>
+
+<div>
+    <input type="radio" id="week" name="range" value="week" {% if request.GET.range == 'week' or not request.GET.range %}checked{% endif %}>
+    <label for="week">1 Week</label>
+    <input type="radio" id="2weeks" name="range" value="2weeks" {% if request.GET.range == '2weeks' %}checked{% endif %}>
+    <label for="2weeks">2 Weeks</label>
+    <input type="radio" id="3weeks" name="range" value="3weeks" {% if request.GET.range == '3weeks' %}checked{% endif %}>
+    <label for="3weeks">3 Weeks</label>
+    <input type="radio" id="month" name="range" value="month" {% if request.GET.range == 'month' %}checked{% endif %}>
+    <label for="month">1 Month</label>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th class="time-header"></th>
+            {% for date in dates %}
+                <th>{{ date|date:"m/d(D)" }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for time in times %}
+            <tr>
+                <td>{{ time|date:"H:i" }}</td>
+                {% for date in dates %}
+                    {% with symbol=get_random_symbol %}
+                        <td class="{% if symbol == '●' %}available{% elif symbol == '▲' %}maybe{% else %}unavailable{% endif %}">{{ symbol }}</td>
+                    {% endwith %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    const radios = document.querySelectorAll('input[name="range"]');
+    radios.forEach(radio => {
+        radio.addEventListener('change', () => {
+            window.location.href = `?range=${radio.value}`;
+        });
+    });
+</script>
+
+{% endblock %}
