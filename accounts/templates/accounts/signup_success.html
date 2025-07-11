@@ -1,0 +1,16 @@
+{% extends 'home/home.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">アカウントを作成しました！</h4>
+        <p>ご登録いただきありがとうございます。以下のリンクから次のステップへお進みください。</p>
+    </div>
+
+    <div class="mt-4">
+        <a href="#" class="btn btn-primary">予約画面へ</a>
+        <a href="{% url 'home' %}" class="btn btn-secondary">ホーム画面へ戻る</a>
+    </div>
+    <p class="mt-2"><small>※「予約画面へ」は現在準備中です。</small></p>
+</div>
+{% endblock %}
