@@ -10,12 +10,14 @@ class LoginForm(AuthenticationForm):
     email = forms.EmailField(
         label="メールアドレス",
         required=False,
-        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'メールアドレスを入力してください'})
+        widget=forms.EmailInput(
+            attrs={'class': 'form-control', 'placeholder': 'メールアドレスを入力してください'})
     )
     phone = forms.CharField(
         label="電話番号",
         required=False,
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '電話番号を入力してください'})
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'placeholder': '電話番号を入力してください'})
     )
 
     def clean(self):
@@ -46,7 +48,7 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
         fields = (
-            'email', # usernameを削除
+            'email',
             'last_name', 'first_name', 'last_name_kana', 'first_name_kana',
             'birth_date', 'phone',
             'postal_code', 'prefecture', 'city', 'street_address', 'building_name'
